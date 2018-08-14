@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Map.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;IABusqueda&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">environment.map</a> &gt; <span class="el_source">Map.java</span></div><h1>Map.java</h1><pre class="source lang-java linenums">package environment.map;
+
+import java.util.Collections;
+import java.util.List;
+
+/**
+ * Implements a map with locations, distance labeled links between the
+ * locations.
+ * Locations are represented by strings and travel distances by double values.
+ * Locations and links can be added dynamically and removed after creation. This
+ * enables to read maps from file or to modify them with respect to newly
+ * obtained knowledge.
+ * 
+ * @author Ruediger Lunde
+ */
+public class Map {
+    private LabeledGraph&lt;String, Double&gt; graphMap;
+    
+    /**
+     *
+     */
+<span class="fc" id="L22">    public Map() {</span>
+<span class="fc" id="L23">        graphMap = new LabeledGraph&lt;String, Double&gt;();</span>
+<span class="fc" id="L24">    }</span>
+
+    /**
+     * Removes everything.
+     */
+    public void clear() {
+<span class="fc" id="L30">        graphMap.clear();</span>
+<span class="fc" id="L31">    }</span>
+
+    /**
+     * Returns a list of all locations.
+     * @return 
+     */
+    public List&lt;String&gt; getLocations() {
+<span class="nc" id="L38">        return graphMap.getVertexLabels();</span>
+    }
+
+    /**
+     * Checks whether the given string is the name of a location.
+     * @param str
+     * @return 
+     */
+    public boolean isLocation(String str) {
+<span class="fc" id="L47">        return graphMap.isVertexLabel(str);</span>
+    }
+
+    /**
+     * Answers to the question: Where can I get, following one of the
+     * connections starting at the specified location?
+     * @param location
+     * @return 
+     */
+    public List&lt;String&gt; getPossibleNextLocations(String location) {
+<span class="fc" id="L57">        List&lt;String&gt; result = graphMap.getSuccessors(location);</span>
+<span class="fc" id="L58">        Collections.sort(result);</span>
+<span class="fc" id="L59">        return result;</span>
+    }
+
+    /**
+     * Answers to the question: From where can I reach a specified location,
+     * following one of the map connections? This implementation just calls
+     * {@link #getPossibleNextLocations(String)} as the underlying graph
+     * structure cannot be traversed efficiently in reverse order.
+     * @param location
+     * @return 
+     */
+    public List&lt;String&gt; getPossiblePrevLocations(String location) {
+<span class="nc" id="L71">        return getPossibleNextLocations(location);</span>
+    }
+
+    /**
+     * Returns the travel distance between the two specified locations if they
+     * are linked by a connection and null otherwise.
+     * @param fromLocation
+     * @param toLocation
+     * @return 
+     */
+    public Double getDistance(String fromLocation, String toLocation) {
+<span class="nc" id="L82">        return graphMap.get(fromLocation, toLocation);</span>
+    }
+
+    /**
+     * Adds a one-way connection to the map.
+     * @param fromLocation
+     * @param distance
+     * @param toLocation
+     */
+    public void addUnidirectionalLink(String fromLocation, String toLocation, Double distance) {
+<span class="nc" id="L92">        graphMap.set(fromLocation, toLocation, distance);</span>
+<span class="nc" id="L93">    }</span>
+
+    /**
+     * Adds a connection which can be traveled in both direction. Internally,
+     * such a connection is represented as two one-way connections.
+     * @param fromLocation
+     * @param toLocation
+     * @param distance
+     */
+    public void addBidirectionalLink(String fromLocation, String toLocation, Double distance) {
+<span class="fc" id="L103">        graphMap.set(fromLocation, toLocation, distance);</span>
+<span class="fc" id="L104">        graphMap.set(toLocation, fromLocation, distance);</span>
+<span class="fc" id="L105">    }</span>
+
+    /**
+     * Removes a one-way connection.
+     * @param fromLocation
+     * @param toLocation
+     */
+    public void removeUnidirectionalLink(String fromLocation, String toLocation) {
+<span class="nc" id="L113">        graphMap.remove(fromLocation, toLocation);</span>
+<span class="nc" id="L114">    }</span>
+
+    /**
+     * Removes the two corresponding one-way connections.
+     * @param fromLocation
+     * @param toLocation
+     */
+    public void removeBidirectionalLink(String fromLocation, String toLocation) {
+<span class="nc" id="L122">        graphMap.remove(fromLocation, toLocation);</span>
+<span class="nc" id="L123">        graphMap.remove(toLocation, fromLocation);</span>
+<span class="nc" id="L124">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>LabeledGraph.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;IABusqueda&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">environment.map</a> &gt; <span class="el_source">LabeledGraph.java</span></div><h1>LabeledGraph.java</h1><pre class="source lang-java linenums">package environment.map;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+/**
+ * Represents a directed labeled graph. Vertices are represented by their unique
+ * labels and labeled edges by means of nested hashtables. Variant of class
+ * {@code aima.util.Table}. This version is more dynamic, it requires no
+ * initialization and can add new items whenever needed.
+ * 
+ * @author R. Lunde
+ * @author Mike Stampone
+ * @param &lt;VertexLabelType&gt;
+ * @param &lt;EdgeLabelType&gt;
+ */
+public class LabeledGraph&lt;VertexLabelType, EdgeLabelType&gt; {
+
+	/**
+	 * Lookup for edge label information. Contains an entry for every vertex
+	 * label.
+	 */
+	private final HashMap&lt;VertexLabelType, HashMap&lt;VertexLabelType, EdgeLabelType&gt;&gt; globalEdgeLookup;
+	/** List of the labels of all vertices within the graph. */
+	private final List&lt;VertexLabelType&gt; vertexLabels;
+
+	/** Creates a new empty graph. */
+<span class="fc" id="L29">	public LabeledGraph() {</span>
+<span class="fc" id="L30">		globalEdgeLookup = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L31">		vertexLabels = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L32">	}</span>
+
+	/**
+	 * Adds a new vertex to the graph if it is not already present.
+	 * 
+	 * @param v
+	 *            the vertex to add
+	 */
+	public void addVertex(VertexLabelType v) {
+<span class="nc" id="L41">		checkForNewVertex(v);</span>
+<span class="nc" id="L42">	}</span>
+
+	/**
+	 * Adds a directed labeled edge to the graph. The end points of the edge are
+	 * specified by vertex labels. New vertices are automatically identified and
+	 * added to the graph.
+	 * 
+	 * @param from
+	 *            the first vertex of the edge
+	 * @param to
+	 *            the second vertex of the edge
+	 * @param el
+	 *            an edge label
+	 */
+	public void set(VertexLabelType from, VertexLabelType to, EdgeLabelType el) {
+<span class="fc" id="L57">		HashMap&lt;VertexLabelType, EdgeLabelType&gt; localEdgeLookup = checkForNewVertex(from);</span>
+<span class="fc" id="L58">		localEdgeLookup.put(to, el);</span>
+<span class="fc" id="L59">		checkForNewVertex(to);</span>
+<span class="fc" id="L60">	}</span>
+
+	/** Handles new vertices. */
+	private HashMap&lt;VertexLabelType, EdgeLabelType&gt; checkForNewVertex(
+			VertexLabelType v) {
+<span class="fc" id="L65">		HashMap&lt;VertexLabelType, EdgeLabelType&gt; result = globalEdgeLookup</span>
+<span class="fc" id="L66">				.get(v);</span>
+<span class="fc bfc" id="L67" title="All 2 branches covered.">		if (result == null) {</span>
+<span class="fc" id="L68">			result = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L69">			globalEdgeLookup.put(v, result);</span>
+<span class="fc" id="L70">			vertexLabels.add(v);</span>
+		}
+<span class="fc" id="L72">		return result;</span>
+	}
+
+	/**
+	 * Removes an edge from the graph.
+	 * 
+	 * @param from
+	 *            the first vertex of the edge
+	 * @param to
+	 *            the second vertex of the edge
+	 */
+	public void remove(VertexLabelType from, VertexLabelType to) {
+<span class="nc" id="L84">		HashMap&lt;VertexLabelType, EdgeLabelType&gt; localEdgeLookup = globalEdgeLookup</span>
+<span class="nc" id="L85">				.get(from);</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">		if (localEdgeLookup != null)</span>
+<span class="nc" id="L87">			localEdgeLookup.remove(to);</span>
+<span class="nc" id="L88">	}</span>
+
+	/**
+	 * Returns the label of the edge between the specified vertices, or null if
+	 * there is no edge between them.
+	 * 
+	 * @param from
+	 *            the first vertex of the ege
+	 * @param to
+	 *            the second vertex of the edge
+	 * 
+	 * @return the label of the edge between the specified vertices, or null if
+	 *         there is no edge between them.
+	 */
+	public EdgeLabelType get(VertexLabelType from, VertexLabelType to) {
+<span class="nc" id="L103">		HashMap&lt;VertexLabelType, EdgeLabelType&gt; localEdgeLookup = globalEdgeLookup</span>
+<span class="nc" id="L104">				.get(from);</span>
+<span class="nc bnc" id="L105" title="All 2 branches missed.">		return localEdgeLookup == null ? null : localEdgeLookup.get(to);</span>
+	}
+
+	/**
+	 * Returns the labels of those vertices which can be obtained by following
+	 * the edges starting at the specified vertex.
+     * @param v
+     * @return 
+	 */
+	public List&lt;VertexLabelType&gt; getSuccessors(VertexLabelType v) {
+<span class="fc" id="L115">		List&lt;VertexLabelType&gt; result = new ArrayList&lt;VertexLabelType&gt;();</span>
+<span class="fc" id="L116">		HashMap&lt;VertexLabelType, EdgeLabelType&gt; localEdgeLookup = globalEdgeLookup</span>
+<span class="fc" id="L117">				.get(v);</span>
+<span class="pc bpc" id="L118" title="1 of 2 branches missed.">		if (localEdgeLookup != null)</span>
+<span class="fc" id="L119">			result.addAll(localEdgeLookup.keySet());</span>
+<span class="fc" id="L120">		return result;</span>
+	}
+
+	/** Returns the labels of all vertices within the graph.
+     * @return  */
+	public List&lt;VertexLabelType&gt; getVertexLabels() {
+<span class="nc" id="L126">		return vertexLabels;</span>
+	}
+
+	/** Checks whether the given label is the label of one of the vertices.
+     * @param v
+     * @return  */
+	public boolean isVertexLabel(VertexLabelType v) {
+<span class="pc bpc" id="L133" title="1 of 2 branches missed.">		return globalEdgeLookup.get(v) != null;</span>
+	}
+
+	/** Removes all vertices and all edges from the graph. */
+	public void clear() {
+<span class="fc" id="L138">		vertexLabels.clear();</span>
+<span class="fc" id="L139">		globalEdgeLookup.clear();</span>
+<span class="fc" id="L140">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

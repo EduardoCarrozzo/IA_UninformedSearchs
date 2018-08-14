@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>SimplifiedRoadMapOfPartOfRomania.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;IABusqueda&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">environment.map</a> &gt; <span class="el_source">SimplifiedRoadMapOfPartOfRomania.java</span></div><h1>SimplifiedRoadMapOfPartOfRomania.java</h1><pre class="source lang-java linenums">package environment.map;
+
+/**
+ * Represents a simplified road map of Romania. The initialization method is
+ * declared static. So it can also be used to initialize other specialized
+ * subclasses of {@link ExtendableMap} with road map data from Romania. Location
+ * names, road distances and directions have been extracted from Artificial
+ * Intelligence A Modern Approach (2nd Edition), Figure 3.2, page 63. The
+ * straight-line distances to Bucharest have been taken from Artificial
+ * Intelligence A Modern Approach (2nd Edition), Figure 4.1, page 95.
+ * 
+ * @author Ruediger Lunde
+ */
+public class SimplifiedRoadMapOfPartOfRomania extends Map {
+
+    /**
+     *
+     */
+<span class="fc" id="L19">    public SimplifiedRoadMapOfPartOfRomania() {</span>
+<span class="fc" id="L20">		initMap(this);</span>
+<span class="fc" id="L21">	}</span>
+
+	// The different locations in the simplified map of part of Romania
+
+    /**
+     *
+     */
+	public static final String ORADEA = &quot;Oradea&quot;;
+
+    /**
+     *
+     */
+    public static final String ZERIND = &quot;Zerind&quot;;
+
+    /**
+     *
+     */
+    public static final String ARAD = &quot;Arad&quot;;
+
+    /**
+     *
+     */
+    public static final String TIMISOARA = &quot;Timisoara&quot;;
+
+    /**
+     *
+     */
+    public static final String LUGOJ = &quot;Lugoj&quot;;
+
+    /**
+     *
+     */
+    public static final String MEHADIA = &quot;Mehadia&quot;;
+
+    /**
+     *
+     */
+    public static final String DOBRETA = &quot;Dobreta&quot;;
+
+    /**
+     *
+     */
+    public static final String SIBIU = &quot;Sibiu&quot;;
+
+    /**
+     *
+     */
+    public static final String RIMNICU_VILCEA = &quot;RimnicuVilcea&quot;;
+
+    /**
+     *
+     */
+    public static final String CRAIOVA = &quot;Craiova&quot;;
+
+    /**
+     *
+     */
+    public static final String FAGARAS = &quot;Fagaras&quot;;
+
+    /**
+     *
+     */
+    public static final String PITESTI = &quot;Pitesti&quot;;
+
+    /**
+     *
+     */
+    public static final String GIURGIU = &quot;Giurgiu&quot;;
+
+    /**
+     *
+     */
+    public static final String BUCHAREST = &quot;Bucharest&quot;;
+
+    /**
+     *
+     */
+    public static final String NEAMT = &quot;Neamt&quot;;
+
+    /**
+     *
+     */
+    public static final String URZICENI = &quot;Urziceni&quot;;
+
+    /**
+     *
+     */
+    public static final String IASI = &quot;Iasi&quot;;
+
+    /**
+     *
+     */
+    public static final String VASLUI = &quot;Vaslui&quot;;
+
+    /**
+     *
+     */
+    public static final String HIRSOVA = &quot;Hirsova&quot;;
+
+    /**
+     *
+     */
+    public static final String EFORIE = &quot;Eforie&quot;;
+
+	/**
+	 * Initializes a map with a simplified road map of Romania.
+     * @param map
+	 */
+	public static void initMap(Map map) {
+		// mapOfRomania
+<span class="fc" id="L131">		map.clear();</span>
+<span class="fc" id="L132">		map.addBidirectionalLink(ORADEA, ZERIND, 71.0);</span>
+<span class="fc" id="L133">		map.addBidirectionalLink(ORADEA, SIBIU, 151.0);</span>
+<span class="fc" id="L134">		map.addBidirectionalLink(ZERIND, ARAD, 75.0);</span>
+<span class="fc" id="L135">		map.addBidirectionalLink(ARAD, TIMISOARA, 118.0);</span>
+<span class="fc" id="L136">		map.addBidirectionalLink(ARAD, SIBIU, 140.0);</span>
+<span class="fc" id="L137">		map.addBidirectionalLink(TIMISOARA, LUGOJ, 111.0);</span>
+<span class="fc" id="L138">		map.addBidirectionalLink(LUGOJ, MEHADIA, 70.0);</span>
+<span class="fc" id="L139">		map.addBidirectionalLink(MEHADIA, DOBRETA, 75.0);</span>
+<span class="fc" id="L140">		map.addBidirectionalLink(DOBRETA, CRAIOVA, 120.0);</span>
+<span class="fc" id="L141">		map.addBidirectionalLink(SIBIU, FAGARAS, 99.0);</span>
+<span class="fc" id="L142">		map.addBidirectionalLink(SIBIU, RIMNICU_VILCEA, 80.0);</span>
+<span class="fc" id="L143">		map.addBidirectionalLink(RIMNICU_VILCEA, PITESTI, 97.0);</span>
+<span class="fc" id="L144">		map.addBidirectionalLink(RIMNICU_VILCEA, CRAIOVA, 146.0);</span>
+<span class="fc" id="L145">		map.addBidirectionalLink(CRAIOVA, PITESTI, 138.0);</span>
+<span class="fc" id="L146">		map.addBidirectionalLink(FAGARAS, BUCHAREST, 211.0);</span>
+<span class="fc" id="L147">		map.addBidirectionalLink(PITESTI, BUCHAREST, 101.0);</span>
+<span class="fc" id="L148">		map.addBidirectionalLink(GIURGIU, BUCHAREST, 90.0);</span>
+<span class="fc" id="L149">		map.addBidirectionalLink(BUCHAREST, URZICENI, 85.0);</span>
+<span class="fc" id="L150">		map.addBidirectionalLink(NEAMT, IASI, 87.0);</span>
+<span class="fc" id="L151">		map.addBidirectionalLink(URZICENI, VASLUI, 142.0);</span>
+<span class="fc" id="L152">		map.addBidirectionalLink(URZICENI, HIRSOVA, 98.0);</span>
+<span class="fc" id="L153">		map.addBidirectionalLink(IASI, VASLUI, 92.0);</span>
+		// addBidirectionalLink(VASLUI - already all linked
+<span class="fc" id="L155">		map.addBidirectionalLink(HIRSOVA, EFORIE, 86.0);</span>
+		// addBidirectionalLink(EFORIE - already all linked
+<span class="fc" id="L157">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

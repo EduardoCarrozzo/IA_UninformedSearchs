@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>EightPuzzle.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;IABusqueda&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">environment.eightpuzzle</a> &gt; <span class="el_source">EightPuzzle.java</span></div><h1>EightPuzzle.java</h1><pre class="source lang-java linenums">package environment.eightpuzzle;
+
+import java.util.HashSet;
+import java.util.Set;
+
+/**
+ *
+ * @author Carlos A. Casanova P.
+ */
+public class EightPuzzle {
+    
+<span class="nc" id="L12">    private int[][] puzzle = new int[3][3];</span>
+    private int x, y;
+
+    /**
+     *
+     * @param puzzle
+     */
+<span class="nc" id="L19">    public EightPuzzle(int[][] puzzle) {</span>
+<span class="nc bnc" id="L20" title="All 4 branches missed.">        if(puzzle.length != 3 || puzzle[0].length != 3){</span>
+<span class="nc" id="L21">            throw new IllegalArgumentException(&quot;Puzzle size must be 3x3&quot;);</span>
+        }
+<span class="nc" id="L23">        Set&lt;Integer&gt; enteros = new HashSet&lt;&gt;(9);</span>
+<span class="nc bnc" id="L24" title="All 2 branches missed.">        for(int i = 0; i &lt; 9; i++) </span>
+<span class="nc" id="L25">            enteros.add(i);</span>
+        
+<span class="nc bnc" id="L27" title="All 2 branches missed.">        for(int i = 0; i &lt; 3; i++){</span>
+<span class="nc bnc" id="L28" title="All 2 branches missed.">            for(int j = 0; j &lt; 3; j++){</span>
+<span class="nc bnc" id="L29" title="All 4 branches missed.">                if(puzzle[i][j] &lt; 0 || puzzle[i][j] &gt; 8){</span>
+<span class="nc" id="L30">                    throw new IllegalArgumentException(&quot;Puzzle elements are integers in range [0, 8]&quot;);</span>
+                }
+<span class="nc bnc" id="L32" title="All 2 branches missed.">                else if(puzzle[i][j] == 0){</span>
+<span class="nc" id="L33">                    this.x = i;</span>
+<span class="nc" id="L34">                    this.y = j;</span>
+                }
+<span class="nc bnc" id="L36" title="All 2 branches missed.">                if(!enteros.contains(puzzle[i][j]))</span>
+<span class="nc" id="L37">                    throw new IllegalArgumentException(&quot;Puzzle elements must be unique&quot;);</span>
+<span class="nc" id="L38">                enteros.remove(puzzle[i][j]);</span>
+            }
+        }
+<span class="nc" id="L41">        this.puzzle = puzzle;</span>
+<span class="nc" id="L42">    }</span>
+
+    /**
+     *
+     * @param anotherPuzzle
+     */
+<span class="nc" id="L48">    public EightPuzzle(EightPuzzle anotherPuzzle) {</span>
+<span class="nc" id="L49">        this.puzzle = anotherPuzzle.puzzle;</span>
+<span class="nc" id="L50">        this.x = anotherPuzzle.x;</span>
+<span class="nc" id="L51">        this.y = anotherPuzzle.y;</span>
+<span class="nc" id="L52">    }</span>
+    
+    /**
+     *
+     */
+    public void moveBlankRight(){
+<span class="nc bnc" id="L58" title="All 2 branches missed.">        if(y == 2) throw new IllegalStateException(&quot;Blank is already on top right&quot;);</span>
+<span class="nc" id="L59">        this.puzzle[x][y] = this.puzzle[x][y+1];</span>
+<span class="nc" id="L60">        this.puzzle[x][y+1] = 0;</span>
+<span class="nc" id="L61">    }</span>
+    
+    /**
+     *
+     */
+    public void moveBlankLeft(){
+<span class="nc bnc" id="L67" title="All 2 branches missed.">        if(y == 0) throw new IllegalStateException(&quot;Blank is already on top left&quot;);</span>
+<span class="nc" id="L68">        this.puzzle[x][y] = this.puzzle[x][y-1];</span>
+<span class="nc" id="L69">        this.puzzle[x][y-1] = 0;</span>
+<span class="nc" id="L70">    }</span>
+    
+    /**
+     *
+     */
+    public void moveBlankUp(){
+<span class="nc bnc" id="L76" title="All 2 branches missed.">        if(x == 0) throw new IllegalStateException(&quot;Blank is already on top&quot;);</span>
+<span class="nc" id="L77">        this.puzzle[x][y] = this.puzzle[x-1][y];</span>
+<span class="nc" id="L78">        this.puzzle[x-1][y] = 0;</span>
+<span class="nc" id="L79">    }</span>
+    
+    /**
+     *
+     */
+    public void moveBlankDown(){
+<span class="nc bnc" id="L85" title="All 2 branches missed.">        if(x == 2) throw new IllegalStateException(&quot;Blank is already on bottom&quot;);</span>
+<span class="nc" id="L86">        this.puzzle[x][y] = this.puzzle[x+1][y];</span>
+<span class="nc" id="L87">        this.puzzle[x+1][y] = 0;</span>
+<span class="nc" id="L88">    }</span>
+
+    /**
+     *
+     * @return
+     */
+    @Override
+    public String toString() {
+<span class="nc" id="L96">        String result = &quot;&quot;;</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">        for(int[] fila: this.puzzle){</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">            for(int elemento: fila){</span>
+<span class="nc" id="L99">                result = result.concat(String.valueOf(elemento)).concat(&quot; &quot;);</span>
+            }
+<span class="nc" id="L101">            result = result.concat(&quot;\n&quot;);</span>
+        }
+<span class="nc" id="L103">        return result;</span>
+    }
+    
+    /**
+     *
+     * @return
+     */
+    public static EightPuzzle getCorrectPuzzle(){
+<span class="nc" id="L111">        int[][] correctPuzzle = {{0, 1, 2}, {3, 4, 5}, {6, 7, 8}};</span>
+<span class="nc" id="L112">        return new EightPuzzle(correctPuzzle);</span>
+    }
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>
